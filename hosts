@@ -1,0 +1,5 @@
+# -*- Mode: conf; -*-                                                                                                                                                                         
+
+localhost ansible_connection=local
+
+proxmox ansible_ssh_host=proxmox4.charenton.tld ansible_become_pass="{{ lookup('pipe', 'pass sudo/charenton') }}"
