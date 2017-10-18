@@ -1,1 +1,5 @@
 ---
+- host: proxmox
+  gather_facts: True
+
+  
