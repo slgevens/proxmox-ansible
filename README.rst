@@ -18,4 +18,4 @@ Usage ::
 	ansible-playbook proxmox.yml -t stop -D -e vmid=780
 
 	# delete
-	
+	ansible-playbook proxmox.yml -t remove -D -e vmid=106
