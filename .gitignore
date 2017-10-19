@@ -2,3 +2,5 @@
 .DS_Store
 vars/proxmox.yml
 log/
+.retry/
+.cache/
