@@ -1,5 +1,55 @@
 ---
-- host: proxmox
+- hosts: localhost
   gather_facts: True
 
-  
+  vars_files: 
+    - vars/proxmox.yml
+
+  tasks: 
+    - name: create container
+      tags: create
+      proxmox:
+        vmid: '{{ vmid }}'
+        node: '{{ proxmox_node }}'
+        api_host: '{{ proxmox_api_host }}'
+        api_user: '{{ proxmox_api_user }}'
+        api_password: '{{ proxmox_api_password }}'
+        hostname: '{{ hostname }}'
+        password: '{{ proxmox_password_new_node }}'      
+        ostemplate: '{{ proxmox_os_template }}'
+        pubkey: '{{ proxmox_pub_key }}'
+        netif: '{"net0":"name=eth0,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
+        cores: 1
+        storage: local
+        memory: 2048
+        swap: 1048
+        disk: 8
+        force: yes
+
+    - name: start container
+      tags: start
+      proxmox:
+        vmid: '{{ vmid }}'
+        api_user: '{{ proxmox_api_user }}'
+        api_password: '{{ proxmox_api_password }}'
+        api_host: '{{ proxmox_api_host }}'
+        state: started
+
+    - name: stop container
+      tags: stop
+      proxmox:
+        vmid: '{{ vmid }}'
+        api_user: '{{ proxmox_api_user }}'
+        api_password: '{{ proxmox_api_password }}'
+        api_host: '{{ proxmox_api_host }}'
+        force: yes
+        state: stopped
+
+    - name: remove container
+      tags: remove
+      proxmox:
+        vmid: '{{ vmid }}'
+        api_user: '{{ proxmox_api_user }}'
+        api_password: '{{ proxmox_api_password }}'
+        api_host: '{{ proxmox_api_host }}'
+        state: absent
