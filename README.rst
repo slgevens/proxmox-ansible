@@ -23,6 +23,9 @@ Usage ::
 	# stop
 	ansible-playbook proxmox.yml -t stop -e vmid=781
 
+	# stop multiple container
+	ansible-playbook proxmox.yml -t stop -e vmid=[781,782,783]
+	
 	# delete
 	ansible-playbook proxmox.yml -t stop -e vmid=781
 
