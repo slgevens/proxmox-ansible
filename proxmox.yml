@@ -2,21 +2,29 @@
 - hosts: localhost
   gather_facts: True
 
+  vars: 
+    template:
+      jessie: 'local:vztmpl/debian-8.0-standard_8.7-1_amd64.tar.gz'
+      stretch: 'local:vztmpl/debian-9.0-standard_9.0-2_amd64.tar.gz'
+
   vars_files: 
     - vars/proxmox.yml
 
   tasks: 
     - name: create container
+      register: create
+      with_items: 
+        - "{{ vmid }}"
       tags: create
       proxmox:
-        vmid: '{{ vmid }}'
+        vmid: "{{ item }}"
         node: '{{ proxmox_node }}'
         api_host: '{{ proxmox_api_host }}'
         api_user: '{{ proxmox_api_user }}'
         api_password: '{{ proxmox_api_password }}'
-        hostname: '{{ hostname }}'
+        hostname: "{{ hostname }}"
         password: '{{ proxmox_password_new_node }}'      
-        ostemplate: '{{ proxmox_os_template }}'
+        ostemplate: "{{ template[os_version | default('stretch')] }}"
         pubkey: '{{ proxmox_pub_key }}'
         netif: '{"net0":"name=eth0,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
         cores: 1
@@ -26,30 +34,48 @@
         disk: 8
         force: yes
 
+    - debug: { var: create.msg }
+      tags: create
+
     - name: start container
+      register: start
       tags: start
+      with_items: '{{ vmid }}'
       proxmox:
-        vmid: '{{ vmid }}'
+        vmid: '{{ item }}'
         api_user: '{{ proxmox_api_user }}'
         api_password: '{{ proxmox_api_password }}'
         api_host: '{{ proxmox_api_host }}'
         state: started
 
+    - debug: { var: start.msg }
+      tags: start
+
     - name: stop container
+      register: stop
       tags: stop
+      with_items: '{{ vmid }}'
       proxmox:
-        vmid: '{{ vmid }}'
+        vmid: '{{ item }}'
         api_user: '{{ proxmox_api_user }}'
         api_password: '{{ proxmox_api_password }}'
         api_host: '{{ proxmox_api_host }}'
         force: yes
         state: stopped
 
+    - debug: { var: stop.msg }
+      tags: stop
+
     - name: remove container
+      register: remove
       tags: remove
+      with_items: '{{ vmid }}'
       proxmox:
-        vmid: '{{ vmid }}'
+        vmid: '{{ item }}'
         api_user: '{{ proxmox_api_user }}'
         api_password: '{{ proxmox_api_password }}'
         api_host: '{{ proxmox_api_host }}'
         state: absent
+
+    - debug: { var: remove.msg }
+      tags: remove
