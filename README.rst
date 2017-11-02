@@ -8,14 +8,20 @@ Environment ::
 
 Usage ::
 
-	# create
-	ansible-playbook proxmox.yml -t create -D -e hostname=evens1 -e vmid=780
+	# create one container
+	ansible-playbook jessie-proxmox.yml -t create -D -e hostname=evens1 -e vmid=780
+
+	#create multiple container (all with the same hostname)
+	ansible-playbook jessie-proxmox.yml -t create -D -e hostname=evens1 -e vmid=[781,782,783]
 
 	# start
-	ansible-playbook proxmox.yml -t start -D -e vmid=780
+	ansible-playbook jessie-proxmox.yml -t start -e vmid=781
+
+	# start mutiple container
+	ansible-playbook jessie-proxmox.yml -t start -e vmid=[781,782,783]
 
 	# stop
-	ansible-playbook proxmox.yml -t stop -D -e vmid=780
+	ansible-playbook jessie-proxmox.yml -t stop -e vmid=781
 
 	# delete
-	ansible-playbook proxmox.yml -t remove -D -e vmid=106
+	ansible-playbook jessie-proxmox.yml -t stop -e vmid=[781,782,783]
