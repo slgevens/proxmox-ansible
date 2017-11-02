@@ -8,20 +8,23 @@ Environment ::
 
 Usage ::
 
-	# create one container
-	ansible-playbook jessie-proxmox.yml -t create -D -e hostname=evens1 -e vmid=780
+	# create one container (os_version: stretch by default)
+	ansible-playbook proxmox.yml -t create -D -e hostname=evens1 -e vmid=780 -e os_version=jessie 
 
 	#create multiple container (all with the same hostname)
-	ansible-playbook jessie-proxmox.yml -t create -D -e hostname=evens1 -e vmid=[781,782,783]
+	ansible-playbook proxmox.yml -t create -D -e hostname=evens1 -e vmid=[781,782,783] -e os_version=jessie
 
 	# start
-	ansible-playbook jessie-proxmox.yml -t start -e vmid=781
+	ansible-playbook proxmox.yml -t start -e vmid=781
 
 	# start mutiple container
-	ansible-playbook jessie-proxmox.yml -t start -e vmid=[781,782,783]
+	ansible-playbook proxmox.yml -t start -e vmid=[781,782,783]
 
 	# stop
-	ansible-playbook jessie-proxmox.yml -t stop -e vmid=781
+	ansible-playbook proxmox.yml -t stop -e vmid=781
 
 	# delete
-	ansible-playbook jessie-proxmox.yml -t stop -e vmid=[781,782,783]
+	ansible-playbook proxmox.yml -t stop -e vmid=[781,782,783]
+
+	delete multiple container
+	ansible-playbook proxmox.yml -t stop -e vmid=[781,782,783]
