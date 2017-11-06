@@ -8,7 +8,6 @@ Environment ::
 
 You have to create a file with your own variables ``vars/proxmox.yml`` ::
 
-	---
 	proxmox_vmid: 780
 	proxmox_node: proxmox4
 	proxmox_api_host: bridge-proxmox4.charenton.tld
