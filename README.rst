@@ -7,14 +7,13 @@ Environment ::
 	pip install proxmoxer requests
 
 You have to create a file with your own variables ``vars/proxmox.yml`` ::
-
 	proxmox_vmid: 780
 	proxmox_node: proxmox4
 	proxmox_api_host: bridge-proxmox4.charenton.tld
 	proxmox_api_user: root@pam
 	template:
-      jessie: 'local:vztmpl/debian-8.0-standard_8.7-1_amd64.tar.gz'
-      stretch: 'local:vztmpl/debian-9.0-standard_9.0-2_amd64.tar.gz'
+             jessie: 'local:vztmpl/debian-8.0-standard_8.7-1_amd64.tar.gz'
+      	     stretch: 'local:vztmpl/debian-9.0-standard_9.0-2_amd64.tar.gz'
       
 	proxmox_api_password: !vault |
 	  $ANSIBLE_VAULT;1.1;AES256
