@@ -1,6 +1,6 @@
 ~
 .DS_Store
-vars/proxmox.yml
+vars/
 log/
 .retry/
 .cache/

@@ -3,3 +3,13 @@
 localhost ansible_connection=local
 
 proxmox ansible_ssh_host=proxmox4.charenton.tld ansible_become_pass="{{ lookup('pipe', 'pass sudo/charenton') }}"
+
+[new-nodes]
+#192.168.1.99
+192.168.1.92
+192.168.1.182
+192.168.1.94
+192.168.1.240
+192.168.1.186
+192.168.1.101
+proxmox3.charenton.tld

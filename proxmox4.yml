@@ -8,7 +8,7 @@
       stretch: 'local:vztmpl/debian-9.0-standard_9.0-2_amd64.tar.gz'
 
   vars_files: 
-    - vars/proxmox.yml
+    - vars/proxmox4.yml
 
   tasks: 
     - name: create container

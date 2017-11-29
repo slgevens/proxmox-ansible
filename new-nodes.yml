@@ -1,0 +1,41 @@
+---
+- hosts: new-nodes
+  gather_facts: True
+  remote_user: root
+
+  tasks:
+
+    - name: update
+      apt: update_cache=yes
+      
+    - name: install sudo and aptitude
+      apt: name='{{ item }}' state=present
+      with_items:
+        - sudo
+        - aptitude
+        
+    - name: create user
+      user: 
+        name: evens
+        shell: /bin/bash
+        password: $6$42AbtLrg7X.okkrM$ZFzkZmnJn.G3FfVyMO69X9Ajpz69cEGw/.j24msY2dgMw8n87bPVki3eTy2y.dASCdE7h/CBQxwp3.xMb9XRE.
+        groups: sudo
+        append: yes
+        #sudo pip install passlib
+        #python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.using(rounds=5000).hash(getpass.getpass())"
+
+    - name: create dir
+      file:
+        path: /home/evens/.ssh
+        state: directory
+        owner: evens
+        group: evens
+        mode: 0755
+
+    - name: copy authorized_keys
+      copy:
+        src: "{{ playbook_dir }}/files/authorized_keys"
+        dest: /home/evens/.ssh/authorized_keys
+        owner: evens
+        group: evens
+        mode: 0600
