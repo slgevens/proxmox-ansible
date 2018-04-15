@@ -39,3 +39,30 @@
         owner: evens
         group: evens
         mode: 0600
+
+    - name: copy bashrc file
+      copy: src={{ playbook_dir }}/files/bashrc-work dest=/home/evens/.bashrc owner=evens group=evens mode=0600
+
+    - name: aptitude update
+      tags: update
+      apt: update_cache=yes
+
+    - name: install all packages needed
+      tags: install
+      with_items:
+        - emacs
+        - rsync
+        - sudo
+        - mercurial
+        - ssh
+        - git
+        - aptitude
+        - htop
+        - curl
+        - figlet   
+      apt:
+        name: '{{ item }}'
+        state: present
+
+    - debug: 
+        msg: "{{ ansible_hostname }} {{ ansible_distribution_release }} {{ ansible_default_ipv4.address }}"

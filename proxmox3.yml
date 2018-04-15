@@ -5,7 +5,7 @@
   vars: 
     template:
       jessie: 'local:vztmpl/debian-8.0-standard_8.7-1_amd64.tar.gz'
-      stretch: 'local:vztmpl/debian-9.0-standard_9.0-2_amd64.tar.gz'
+      stretch: 'infra-nas:vztmpl/debian-9.0-standard_9.3-1_amd64.tar.gz'
 
   vars_files: 
     - vars/proxmox3.yml
@@ -62,6 +62,7 @@
         api_host: '{{ proxmox_api_host }}'
         force: yes
         state: stopped
+      when: stopt is defined
 
     - debug: { var: stop.msg }
       tags: stop
@@ -76,6 +77,7 @@
         api_password: '{{ proxmox_api_password }}'
         api_host: '{{ proxmox_api_host }}'
         state: absent
+      when: stopt is defined
 
     - debug: { var: remove.msg }
       tags: remove
