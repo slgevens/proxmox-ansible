@@ -4,3 +4,4 @@ vars/
 log/
 .retry/
 .cache/
+hosts
