@@ -23,4 +23,8 @@
 #192.168.1.35
 # gsk1.epiconcept.net
 # proxmox4.charenton.tld
-openstack.charenton.tld
+#openstack.charenton.tld
+#extpentaho1.epiconcept.net
+#192.168.1.188
+ec2-3-120-138-162.eu-central-1.compute.amazonaws.com
+ec2-3-120-108-142.eu-central-1.compute.amazonaws.com

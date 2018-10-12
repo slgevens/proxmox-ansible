@@ -1,19 +1,11 @@
 ---
 - hosts: new-nodes
   gather_facts: True
-  remote_user: root
+  remote_user: admin
 
-  vars: 
-    packages: [sudo, aptitude, emacs, rsync, sudo, mercurial, ssh, git, htop, curl, figlet]
-  tasks:
-
-    - name: update
-      apt: update_cache=yes
-      
-    - name: install 
-      apt: name='{{ packages }}' state=present
-        
+  tasks:        
     - name: create user
+      become: True
       user: 
         name: evens
         shell: /bin/bash
@@ -24,6 +16,7 @@
         #python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.using(rounds=5000).hash(getpass.getpass())"
 
     - name: create dir
+      become: True
       file:
         path: /home/evens/.ssh
         state: directory
@@ -32,15 +25,10 @@
         mode: 0755
 
     - name: copy authorized_keys
+      become: True
       copy:
         src: "{{ playbook_dir }}/files/authorized_keys"
         dest: /home/evens/.ssh/authorized_keys
         owner: evens
         group: evens
         mode: 0600
-
-    - name: copy bashrc file
-      copy: src={{ playbook_dir }}/files/bashrc-work dest=/home/evens/.bashrc owner=evens group=evens mode=0600
-
-    - debug: 
-        msg: "{{ ansible_hostname }} {{ ansible_distribution_release }} {{ ansible_default_ipv4.address }}"
